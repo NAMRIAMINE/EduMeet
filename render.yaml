@@ -1,0 +1,59 @@
+services:
+  # Main Backend (serverea) - Port 5001
+  - type: web
+    name: edumeet-serverea
+    runtime: node
+    env: node
+    region: frankfurt
+    buildCommand: cd serverea && npm install
+    startCommand: cd serverea && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URIE
+        sync: false  # Set this in Render dashboard
+      - key: JWT_SECRETA
+        sync: false  # Set this in Render dashboard
+      - key: DEV_NO_AUTH
+        value: false
+      - key: YOUTUBE_API_KEY
+        sync: false  # Set this in Render dashboard
+      - key: GOOGLE_API_KEY
+        sync: false  # Set this in Render dashboard
+      - key: GOOGLE_CSE_ID
+        sync: false  # Set this in Render dashboard
+    healthCheckPath: /api/health
+
+  # Auth Backend (Backea) - Port 5000
+  - type: web
+    name: edumeet-backea
+    runtime: node
+    env: node
+    region: frankfurt
+    buildCommand: cd Backea && npm install
+    startCommand: cd Backea && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_URI
+        sync: false  # Set this in Render dashboard
+      - key: EMAIL_USER
+        sync: false  # Set this in Render dashboard
+      - key: EMAIL_PASS
+        sync: false  # Set this in Render dashboard
+      - key: JWT_SECRET
+        sync: false  # Set this in Render dashboard
+
+  # Quiz/AI Backend (back) - Port 5003
+  - type: web
+    name: edumeet-quiz
+    runtime: node
+    env: node
+    region: frankfurt
+    buildCommand: cd back && npm install
+    startCommand: cd back && npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: GROQ_API_KEY
+        sync: false  # Set this in Render dashboard
