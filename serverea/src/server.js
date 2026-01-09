@@ -18,6 +18,23 @@ app.use("/api/inperson-search", require("./routes/inperson.routes"));
 app.use("/api/analytics", require("./routes/analytics.routes"));
 
 
+// Root endpoint
+app.get("/", (req, res) => {
+  res.json({
+    status: "Serverea Backend OK 🚀",
+    message: "Main API Server",
+    endpoints: {
+      health: "/api/health",
+      auth: "/api/auth",
+      search: "/api/search",
+      inpersonSearch: "/api/inperson-search",
+      needs: "/api/needs",
+      users: "/api/users",
+      analytics: "/api/analytics"
+    }
+  });
+});
+
 app.get("/api/health", (req, res) => {
   res.json({ status: "Backend OK 🚀" });
 });
