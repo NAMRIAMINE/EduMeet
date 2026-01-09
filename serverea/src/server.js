@@ -24,5 +24,11 @@ app.get("/api/health", (req, res) => {
 
 connectDB();
 
-const PORT = process.env.PORT || 5001; // Default to 5001
-app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+// For Vercel serverless, export the app
+// For local development, start the server
+if (process.env.VERCEL !== '1') {
+  const PORT = process.env.PORT || 5001;
+  app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+}
+
+module.exports = app;

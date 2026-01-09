@@ -44,10 +44,15 @@ app.use("/api/auth", EtudRoute);
 
 
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "public", "RegisterEtud.html"));
+  res.json({ status: "Backea Auth Backend OK 🚀", message: "Use /api/auth/* endpoints" });
 });
 
+// For Vercel serverless, export the app
+// For local development, start the server
+if (process.env.VERCEL !== '1') {
+  app.listen(PORT, () => {
+    console.log(`🚀 Serveur démarré sur http://localhost:${PORT}`);
+  });
+}
 
-app.listen(PORT, () => {
-  console.log(`🚀 Serveur démarré sur http://localhost:${PORT}`);
-});
+module.exports = app;

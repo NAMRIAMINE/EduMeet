@@ -85,7 +85,18 @@ app.post('/api/generate-quiz', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 5003;
-app.listen(PORT, () => {
-  console.log(`🚀 Serveur (Groq) lancé sur le port ${PORT}`);
+// Root endpoint for health check
+app.get("/", (req, res) => {
+  res.json({ status: "Quiz Backend OK 🚀", message: "Use POST /api/generate-quiz to generate quizzes" });
 });
+
+// For Vercel serverless, export the app
+// For local development, start the server
+const PORT = process.env.PORT || 5003;
+if (process.env.VERCEL !== '1') {
+  app.listen(PORT, () => {
+    console.log(`🚀 Serveur (Groq) lancé sur le port ${PORT}`);
+  });
+}
+
+module.exports = app;
