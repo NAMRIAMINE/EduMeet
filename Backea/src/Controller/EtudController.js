@@ -90,7 +90,8 @@ exports.sendVerificationEmail = async (req, res) => {
     user.verificationToken = verificationToken;
     await user.save();
 
-    const url = `http://localhost:3000/verify-email?token=${verificationToken}`; //Crée le lien envoyé par email.
+    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+    const url = `${frontendUrl}/verify-email?token=${verificationToken}`; //Crée le lien envoyé par email.
 
     await transporter.sendMail({
       from: '"EduMeet 👩‍🎓" <no-reply@edumeet.com>',
@@ -126,7 +127,8 @@ await user.save();
 console.log("Token de réinitialisation pour", email, ":", resetToken);
 
 // 4. Lien frontend
-const resetUrl = `http://localhost:3000/reset-password?token=${resetToken}`;
+const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
+const resetUrl = `${frontendUrl}/reset-password?token=${resetToken}`;
 
 
    await transporter.sendMail({
